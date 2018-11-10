@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_outer_classname = "ReverseProto";
+
+package msgreverse;
+
+service messenger{
+    rpc SendMessage (input) returns (input_reply){}
+}
+service integer_message{
+    rpc SendInteger (requestInteger) returns (replyInteger){}
+}
+message replyInteger{
+    int32 value=1;
+}
+message requestInteger{
+    int32 value =1;
+}
+message input{
+    string msg = 1;
+}
+
+message input_reply{
+    string retMsg = 1;
+}
