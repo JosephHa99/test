@@ -1,10 +1,11 @@
 package main
 
+//THIS IS MAIN SERVER
 import (
 	"log"
 	"net"
 
-	pb "github.com/JosephHa99/test"
+	pb "github.com/JosephHa99/test/msgreverse"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -17,8 +18,10 @@ const (
 //server is used to implement reverse.server.
 type server struct{}
 
-func (s *server) SendInteger(ctx context.Context, in *pb.requestInteger) (*pb.replyInteger, error) {
-	return &pb.integerReply{Integer: "Value " + (in.value)*2}, nil
+func (s *server) SendInteger(ctx context.Context, in *pb.RequestInteger) (*pb.ReplyInteger, error) {
+	var temp int32
+	temp = in.Value * 2
+	return &pb.ReplyInteger{Value: temp}, nil
 }
 
 func main() {
@@ -31,9 +34,9 @@ func main() {
 	//Register reflection service on gRPC server.
 	reflection.Register(aServer)
 	//run server
-	errorObj := aServer.Serve(listener)
+	err := aServer.Serve(listener)
 	//Check for errors
 	if errorObj != nil {
-		log.Fatalf("Failed to launch server: %v", err_obj)
+		log.Fatalf("Failed to launch server: %v", err)
 	}
 }
